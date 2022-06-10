@@ -1,0 +1,31 @@
+  import requests
+import re
+import json
+import csv
+#请求头
+headers={     'User_Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.62 Safari/537.36',
+        }
+#请求地址
+url='https://voice.baidu.com/act/newpneumonia/newpneumonia'
+#get请求并解析成text
+response=requests.get(url=url,headers=headers).text
+#转换数据类型成str
+str=re.findall('"component":\[(.*)\],',response)[0]
+#转换成字典
+dict=json.loads(str)
+#转成列表
+caseList=dict['caseList']
+#循环读取
+for case in caseList:
+    area = case['area']  # 地区
+    nativeRelative = case['confirmedRelative']  # 新增人数
+    curConfirm = case['curConfirm']  # 现有确诊人数
+    confirmed = case['confirmed']  # 累计确诊
+    crued = case['crued']  # 治愈人数
+    died = case['died']  #死亡人数
+#写入csv
+with open('./data.csv',mode='a',encoding='utf-8')as f:
+
+        csv_writer=csv.writer(f)
+
+        csv_writer.writerow([area,confirmed,curConfirm,nativeRelative,crued,died])

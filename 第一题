@@ -23,8 +23,8 @@ for case in caseList:
     confirmed = case['confirmed']  # 累计确诊
     crued = case['crued']  # 治愈人数
     died = case['died']  #死亡人数
-#写入csv
-with open('./data.csv',mode='a',encoding='utf-8')as f:
+    #写入csv
+    with open('./data.csv',mode='a',encoding='utf-8')as f:
 
         csv_writer=csv.writer(f)
 
